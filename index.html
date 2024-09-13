@@ -3,10 +3,84 @@
 <html>
     <head>
         <title>Todo List</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <main>
-            <p>Hello World!</p>
+            <div class="header-section">
+                <h2 class="title">Today's Tasks</h2>
+                <input type="text" id="task-input" placeholder="Task name...">
+                <button onclick="newElement()" class="addBtn">Add</button>
+            </div>
+            <br>
+            <ul id="task-UL">
+                <li>Do Groceries</li>
+                <li class="checked">Do Dishes</li>
+                <li>Go to the gym</li>
+                <li>Go for a walk</li>
+                <li>Finish up work</li>
+            </ul>
         </main>
+
+        <script>
+            // Creating a close button
+            var taskList = document.getElementsByTagName("LI");
+            for (var i = 0; i < taskList.length; i++) {
+                var span = document.createElement("SPAN");
+                var txt = document.createTextNode("\u00D7");
+                span.className = "close";
+                span.appendChild(txt);
+                taskList[i].appendChild(span);
+            }
+            
+            // Making the close button delete tasks
+            var close = document.getElementsByClassName("close");
+            for (var i = 0; i < close.length; i++) {
+                close[i].onclick = function() {
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+
+            // Make the task completed on click
+            for (var i = 0; i < taskList.length; i++) {
+                taskList[i].onclick = function () {
+                    if (this.className != "checked") {
+                        this.className = "checked";
+                    } else {
+                        this.className = "";
+                    }
+                }
+            }
+
+            // Add new tasks
+            function newElement() {
+                // Creating the list element
+                var li = document.createElement("li");
+                var inputVal = document.getElementById("task-input").value;
+                var tex = document.createTextNode(inputVal);
+                li.appendChild(tex);
+                if (inputVal === "") {
+                    alert("No task name provided.");
+                } else {
+                    document.getElementById("task-UL").appendChild(li);
+                }
+                document.getElementById("task-input").value = "";
+
+                // Adding the close button
+                var span = document.createElement("SPAN");
+                var txt = document.createTextNode("\u00D7");
+                span.className = "close";
+                span.appendChild(txt);
+                li.appendChild(span);
+
+                for (i = 0; i < close.length; i++) {
+                    close[i].onclick = function () {
+                        var div = this.parentElement;
+                        div.style.display = "none";
+                    }
+                }
+            }
+        </script>
     </body>
 </html>
